@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Записи пациента</title>
+</head>
+<body>
+    <h1>Просмотр записей</h1>
+    <a href="{% url 'patient_profile' %}">Назад в личный кабинет</a>
+
+    <h2>Ваши записи на прием</h2>
+    {% if appointments %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Доктор</th>
+                    <th>Дата</th>
+                    <th>Количество половых партнеров</th>
+                    <th>Возраст начала половой жизни</th>
+                    <th>Количество беременностей</th>
+                    <th>Замечали ли вы у себя папилломы?</th>
+                    <th>Курение</th>
+                    <th>Стаж курения (в годах)</th>
+                    <th>Гормональная контрацепция</th>
+                    <th>Продолжительность гормональной контрацепции (в годах)</th>
+                    <th>Внутриматочная спираль</th>
+                    <th>Продолжительность ношения внутриматочной спирали (в годах)</th>
+                    <th>Наличие ВИЧ</th>
+                    <th>Подозрительный результат Шиллер-теста</th>
+                    <th>Редактирование</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.doctor.last_name }} {{ appointment.doctor.first_name }}</td>
+                    <td>{{ appointment.appointment_date|date:"d.m.Y" }}</td>
+                    <td>{{ appointment.num_of_sexual_partners }}</td>
+                    <td>{{ appointment.first_sexual_intercourse }}</td>
+                    <td>{{ appointment.num_pregnancies }}</td>
+                    <td>{{ appointment.condylomatosis|yesno:"Да,Нет" }}</td>
+                    <td>{{ appointment.smoking|yesno:"Да,Нет" }}</td>
+                    <td>{{ appointment.smoking_years }}</td>
+                    <td>{{ appointment.hormonal_contraception|yesno:"Да,Нет" }}</td>
+                    <td>{{ appointment.hormonal_years }}</td>
+                    <td>{{ appointment.iud|yesno:"Да,Нет" }}</td>
+                    <td>{{ appointment.iud_years }}</td>
+                    <td>{{ appointment.hiv|yesno:"Да,Нет" }}</td>
+                    <td>{{ appointment.schiller_test|yesno:"Да,Нет" }}</td>
+                    <td>
+                        <a href="{% url 'edit_appointment_patient' appointment.id %}">Редактировать</a>
+                        <a href="{% url 'delete_appointment' appointment.id %}" onclick="return confirm('Вы уверены, что хотите удалить запись?');">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>У вас пока нет записей на прием.</p>
+    {% endif %}
+
+    <a href="{% url 'make_appointment' %}">Записаться на прием</a>
+</body>
+</html>

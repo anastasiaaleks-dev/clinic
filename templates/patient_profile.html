@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет пациента</title>
+    <style>
+        .btn {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Личный кабинет пациента</h1>
+
+    <h2>Данные пациента</h2>
+    <p><strong>Фамилия:</strong> {{ profile.last_name }}</p>
+    <p><strong>Имя:</strong> {{ profile.first_name }}</p>
+    <p><strong>Отчество:</strong> {{ profile.patronymic }}</p>
+    <p><strong>Дата рождения:</strong> {{ profile.date_of_birth|date:"d.m.Y" }}</p>
+    <p><strong>Email:</strong> {{ profile.user.email }}</p>
+
+    <h2>Действия</h2>
+    <td>
+        <a href="{% url 'patient_dashboard' %}" class="btn">Посмотреть записи</a>
+        <a href="{% url 'make_appointment' %}" class="btn">Записаться на прием</a>
+        <a href="{% url 'logout' %}" class="btn">Выйти</a>
+    </td>
+</body>
+</html>

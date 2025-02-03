@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о пациенте</title>
+</head>
+<body>
+    <h1>Информация о пациенте</h1>
+
+    <h2>Данные пациента</h2>
+    <p><strong>Фамилия:</strong> {{ patient_profile.last_name }}</p>
+    <p><strong>Имя:</strong> {{ patient_profile.first_name }}</p>
+    <p><strong>Отчество:</strong> {{ patient_profile.patronymic }}</p>
+    <p><strong>Дата рождения:</strong> {{ patient_profile.date_of_birth|date:"d.m.Y" }}</p>
+    <p><strong>Email:</strong> {{ patient_profile.user.email }}</p>
+
+    <h2>Записи на прием</h2>
+    {% if patient_profile.user.appointments.exists %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Дата записи</th>
+                    <th>Количество половых партнеров</th>
+                    <th>Возраст начала половой жизни</th>
+                    <th>Количество беременностей</th>
+                    <th>Наличие папиллом</th>
+                    <th>Курение</th>
+                    <th>Стаж курения</th>
+                    <th>Гормональная контрацепция</th>
+                    <th>Продолжительность гормональной контрацепции (в годах)</th>
+                    <th>Внутриматочная спираль</th>
+                    <th>Продолжительность ношения внутриматочной спирали (в годах)</th>
+                    <th>Наличие ВИЧ</th>
+                    <th>Подозрительный результат Шиллер-теста</th>
+                    <th>Оценка риска</th>
+                    <th>Риск</th>
+                    <th>Редактирование</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in patient_profile.user.appointments.all %}
+                    <tr>
+                        <td>{{ appointment.appointment_date|date:"d.m.Y" }}</td>
+                        <td>{{ appointment.num_of_sexual_partners  }}</td>
+                        <td>{{ appointment.first_sexual_intercourse }}</td>
+                        <td>{{ appointment.num_pregnancies }}</td>
+                        <td>{{ appointment.condylomatosis|yesno:"Да,Нет" }}</td>
+                        <td>{{ appointment.smoking|yesno:"Да,Нет" }}</td>
+                        <td>{{ appointment.smoking_years }}</td>
+                        <td>{{ appointment.hormonal_contraception|yesno:"Да,Нет" }}</td>
+                        <td>{{ appointment.hormonal_years }}</td>
+                        <td>{{ appointment.iud|yesno:"Да,Нет" }}</td>
+                        <td>{{ appointment.iud_years }}</td>
+                        <td>{{ appointment.hiv|yesno:"Да,Нет" }}</td>
+                        <td>{{ appointment.schiller_test|yesno:"Да,Нет" }}</td>
+                        <td>{{ appointment.risk_class }}</td>
+                        <td>{{ appointment.risk }}%</td>
+                        <td>
+                            <a href="{% url 'edit_appointment_doctor' appointment.id %}" class="btn">Редактировать</a>
+                            <a href="{% url 'delete_appointment' appointment.id %}" class="btn">Удалить</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нет записей на прием.</p>
+    {% endif %}
+    <a href="{% url 'doctor_profile' %}">Назад в личный кабинет</a>
+</body>
+</html>

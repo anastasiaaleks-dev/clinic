@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать запись</title>
+</head>
+<body>
+    <h1>Редактировать запись на прием</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <a href="{% url 'doctor_dashboard' appointment.patient.patient_profile.id %}">Назад к записям пациента</a>
+</body>
+</html>
+
+<script>
+    const smokingCheckbox = document.getElementById("id_smoking");
+
+    const smokingCheckbox = document.getElementById("id_smoking");
+    const smokingYearsField = document.getElementById("id_smoking_years");
+
+    const hormonalCheckbox = document.getElementById("id_hormonal_contraception");
+    const hormonalYearsField = document.getElementById("id_hormonal_years");
+
+    const iudCheckbox = document.getElementById("id_iud");
+    const iudYearsField = document.getElementById("id_iud_years");
+
+    smokingCheckbox.addEventListener("change", function() {
+        if (!this.checked) {
+            smokingYearsField.value = 0;
+        }
+    });
+
+    hormonalCheckbox.addEventListener("change", function() {
+        if (!this.checked) {
+            hormonalYearsField.value = 0;
+        }
+    });
+
+    iudCheckbox.addEventListener("change", function() {
+        if (!this.checked) {
+            iudYearsField.value = 0;
+        }
+    });
+</script>

@@ -1,0 +1,5 @@
+django==4.2
+psycopg2-binary==2.9.8
+scikit-learn>=1.2
+python-decouple==3.8
+pandas

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет врача</title>
+</head>
+<body>
+    <h1>Личный кабинет врача</h1>
+
+    <h2>Данные врача</h2>
+    <p><strong>Фамилия:</strong> {{ doctor_profile.user.last_name }}</p>
+    <p><strong>Имя:</strong> {{ doctor_profile.user.first_name }}</p>
+
+    <h2>Список записанных пациентов</h2>
+    {% if patients %}
+        <ul>
+            {% for patient in patients %}
+                <li>
+                    <a href="{% url 'doctor_dashboard' patient.id %}" class="btn">
+                        {{ patient.last_name }} {{ patient.first_name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет пациентов.</p>
+    {% endif %}
+    <h2>Действия</h2>
+    <td>
+        <a href="{% url 'logout' %}" class="btn">Выйти</a>
+    </td>
+</body>
+</html>
+
